@@ -1,6 +1,6 @@
 # Window Controls
 
-  - Middle Clicking on bar if 2 windows are present in a tag swaps them.
+  - Middle Clicking on bar -> Put Focused window to the master position
   - Right clicking on status text on bar launches terminal.
   - ModKey + Dragging with Left Mouse Button allows dragging window from anywhere to anywhere.
   - ModKey + Middle button click toggles floating mode.
@@ -9,7 +9,7 @@
 
 # General Keybindings
 
-  - Mod + 'd' -> Spawn rofi
+  - Mod + d -> Spawn rofi
   - Mod + Return -> Spawn Terminal
   - Mod + b -> toggle bar on a monitor
   - Mod + j,k -> change focus on windows in a tag/stack
