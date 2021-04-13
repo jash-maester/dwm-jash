@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -12,9 +13,10 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const double defaultopacity  = 0.75;
+static const double defaultopacity  = 0.9;
+static const int focusonwheel       = 0;
 static const char *fonts[]          = { "Noto Sans:size=11", "FontAwesome:size=9", "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+//static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -28,7 +30,7 @@ static const char *colors[][3]      = {
 	/*                  fg         bg         border   */
 	[SchemeNorm]    = { nord[4], nord[0], nord[0] },
 	[SchemeSel]     = { nord[0], nord[9],  nord[9]  },
-        [SchemeUrg]     = { nord[0], nord[9],  nord[9]  },
+        [SchemeUrg]     = { nord[0], nord[11],  nord[11]  },
 	[SchemeStatus]  = { nord[4], nord[0],  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = { nord[0], nord[9],  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
         [SchemeTagsNorm]= { nord[4], nord[0],  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -37,8 +39,17 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
+        "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+        "sh", "-c", "~/.fehbg", NULL,
+        "picom", "-b", "--experimental-backend", NULL,
+        "libinput-gestures", "-v", "-c", "~/.config/libinput-gestures.conf", NULL,
+        "numlockx", "on", NULL,
+        "/usr/bin/dunst", NULL,
+        "clipit", NULL,
 	"gnome-terminal", NULL,
         "discord", NULL,
+        "kdeconnect-indicator", NULL,
+        "optimus-manager-qt", NULL,
 	NULL /* terminate */
 };
 
@@ -46,12 +57,15 @@ static const char *const autostart[] = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* class      instance      title       tags mask     isfloating   opacity      monitor */
-	{ "Gimp",     NULL,         NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",  "Navigator",  NULL,       0,            0,           1.0,             -1 },
-	{ "firefox",  "Devtools",   NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",  "Places",    "Library",   0,            1,           1.0,             -1 },
-	{ "Gnome-terminal",  NULL,    NULL,     0,            0,           defaultopacity,  -1 },
+	/* class            instance      title       tags mask     isfloating   opacity      monitor */
+	{ "Gimp",           NULL,         NULL,       0,            1,           1.0,             -1 },
+	{ "firefox",        "Navigator",  NULL,       0,            0,           1.0,             -1 },
+	{ "firefox",        "Devtools",   NULL,       0,            1,           1.0,             -1 },
+	{ "firefox",        "Places",     "Library",  0,            1,           1.0,             -1 },
+	{ "Gnome-terminal", NULL,         NULL,       0,            0,           defaultopacity,  -1 },
+	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           defaultopacity,  -1 },
+        { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           defaultopacity,  -1 },
+    { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           defaultopacity,  -1 },
 };
 
 /* layout(s) */
@@ -84,12 +98,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *dmenucmd[] = { "rofi_launcher.sh", NULL };
 static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
+static const char *browsercmd[]  = { "firefox", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ ControlMask|Mod1Mask,         XK_t,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = musiccmd } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -102,10 +120,11 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
+	//{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
+	{ MODKEY,                       XK_Escape,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ControlMask,           XK_c,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ControlMask|ShiftMask, XK_f,      setlayout,      {.v = &layouts[4]} },
 //	{ MODKEY,                       XK_space,  setlayout,      {0} },
@@ -124,6 +143,22 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE } },
 	{ MODKEY|ShiftMask,		XK_KP_Add, changeopacity,	{.f = +0.1}},
 	{ MODKEY|ShiftMask,		XK_KP_Subtract, changeopacity,  {.f = -0.1}},
+        { MODKEY|ControlMask,           XK_m,         spawn,       SHCMD("pavucontrol") },
+        { 0, XF86XK_Calculator,         spawn,                     SHCMD("gnome-calculator") },
+        { 0, XF86XK_Launch1,            spawn,                     SHCMD("nautilus") },
+        { 0, XF86XK_MonBrightnessUp,    spawn,                     SHCMD("light -A 5") },
+        { 0, XF86XK_MonBrightnessDown,  spawn,                     SHCMD("light -U 5") },
+        { 0, XF86XK_KbdBrightnessUp,    spawn,                     SHCMD("~/.config/i3/scripts/keyboard_light.sh increase") },
+        { 0, XF86XK_KbdBrightnessDown,  spawn,                     SHCMD("~/.config/i3/scripts/keyboard_light.sh decrease") },
+        { 0,                            XK_Print,  spawn,          SHCMD("screenshot-full") },
+        { ShiftMask,                    XK_Print,  spawn,          SHCMD("screenshot-sel") },
+        { 0, XF86XK_AudioRaiseVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
+        { 0, XF86XK_AudioLowerVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
+        { 0, XF86XK_AudioMute,          spawn,                     SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
+        { 0, XF86XK_AudioPlay,          spawn,                     SHCMD("playerctl play-pause") },
+        { 0, XF86XK_AudioStop,          spawn,                     SHCMD("playerctl play") },
+        { 0, XF86XK_AudioNext,          spawn,                     SHCMD("playerctl next") },
+        { 0, XF86XK_AudioPrev,          spawn,                     SHCMD("playerctl previous") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
