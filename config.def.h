@@ -5,6 +5,11 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int startwithgaps	     = 1;	 /* 1 means gaps are used by default */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const double defaultopacity  = 0.75;
@@ -29,6 +34,12 @@ static const char *colors[][3]      = {
         [SchemeTagsNorm]= { nord[4], nord[0],  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
         [SchemeInfoSel] = { nord[0], nord[9],  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
         [SchemeInfoNorm]= { nord[4], nord[0],  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+};
+
+static const char *const autostart[] = {
+	"gnome-terminal", NULL,
+        "discord", NULL,
+	NULL /* terminate */
 };
 
 /* tagging */
@@ -141,4 +152,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
