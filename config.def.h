@@ -102,8 +102,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *dmenucmd[] = { "rofi_launcher.sh", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-h", "23", NULL };
+static const char *roficmd[] = { "rofi_launcher.sh", NULL };
 static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
@@ -113,6 +113,7 @@ static const char *browsercmd[]  = { "firefox", NULL };
 static Key keys[] = {
 	/* modifier                     key                         function            argument */
 	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Rofi/Dmenu
+	{ MODKEY|ShiftMask,             XK_d,                       spawn,              {.v = roficmd} },                  // Spawn Rofi/Dmenu
 	{ MODKEY,                       XK_Return,                  spawn,              {.v = termcmd } },                  // Spawn Terminal
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = termcmd } },                  // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = musiccmd } },                 // Spawn Cmus
