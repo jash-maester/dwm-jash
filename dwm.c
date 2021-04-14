@@ -82,7 +82,8 @@ enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeStatus, SchemeTagsSel, SchemeTags
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetSystemTray, NetSystemTrayOP, NetSystemTrayOrientation, NetSystemTrayOrientationHorz,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
-       NetWMWindowTypeDialog, NetClientList, NetLast, NetWMWindowsOpacity }; /* EWMH atoms */
+       //NetWMWindowTypeDialog, NetClientList, NetLast, NetWMWindowsOpacity }; /* EWMH atoms */
+       NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
 enum { Manager, Xembed, XembedInfo, XLast }; /* Xembed atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
@@ -117,7 +118,7 @@ struct Client {
 	int isfixed, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
 	Client *next;
 	Client *snext;
-	double opacity;
+//	double opacity;
 	Monitor *mon;
 	Window win;
 };
@@ -165,7 +166,7 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int isfloating;
-	double opacity;
+//	double opacity;
 	int monitor;
 } Rule;
 
@@ -183,7 +184,7 @@ static void arrangemon(Monitor *m);
 static void attach(Client *c);
 static void attachstack(Client *c);
 static void buttonpress(XEvent *e);
-static void changeopacity(const Arg *arg);
+//static void changeopacity(const Arg *arg);
 static void checkotherwm(void);
 static void cleanup(void);
 static void cleanupmon(Monitor *mon);
@@ -222,7 +223,7 @@ static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
-static void opacity(Client *c, double opacity);
+//static void opacity(Client *c, double opacity);
 static void pop(Client *);
 static Client *prevtiled(Client *c);
 static void propertynotify(XEvent *e);
@@ -382,7 +383,7 @@ applyrules(Client *c)
 	/* rule matching */
 	c->isfloating = 0;
 	c->tags = 0;
-	c->opacity = defaultopacity;
+//	c->opacity = defaultopacity;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -395,7 +396,7 @@ applyrules(Client *c)
 		{
 			c->isfloating = r->isfloating;
 			c->tags |= r->tags;
-			c->opacity = r->opacity;
+			//c->opacity = r->opacity;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
 				c->mon = m;
@@ -558,6 +559,7 @@ buttonpress(XEvent *e)
 			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
 }
 
+/*
 void
 changeopacity(const Arg *arg)
 {
@@ -572,6 +574,7 @@ changeopacity(const Arg *arg)
 
 	opacity(selmon->sel, selmon->sel->opacity);
 }
+*/
 
 void
 checkotherwm(void)
@@ -1302,7 +1305,7 @@ manage(Window w, XWindowAttributes *wa)
 		c->mon = selmon;
 		applyrules(c);
 	}
-	opacity(c, c->opacity);
+//	opacity(c, c->opacity);
 
 	if (c->x + WIDTH(c) > c->mon->mx + c->mon->mw)
 		c->x = c->mon->mx + c->mon->mw - WIDTH(c);
@@ -1458,6 +1461,7 @@ nexttiled(Client *c)
 	return c;
 }
 
+/*
 void
 opacity(Client *c, double opacity)
 {
@@ -1469,6 +1473,7 @@ opacity(Client *c, double opacity)
 	} else
 		XDeleteProperty(dpy, c->win, netatom[NetWMWindowsOpacity]);
 }
+*/
 
 void
 pop(Client *c)
@@ -2059,7 +2064,7 @@ setup(void)
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
-	netatom[NetWMWindowsOpacity] = XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False);
+//	netatom[NetWMWindowsOpacity] = XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False);
         xatom[Manager] = XInternAtom(dpy, "MANAGER", False);
         xatom[Xembed] = XInternAtom(dpy, "_XEMBED", False);
         xatom[XembedInfo] = XInternAtom(dpy, "_XEMBED_INFO", False);

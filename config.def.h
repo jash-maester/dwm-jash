@@ -13,7 +13,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const double defaultopacity  = 1.0;
+//static const double defaultopacity  = 1.0;
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "Noto Sans:size=11", "FontAwesome:size=9", "monospace:size=10" };
 //static const char dmenufont[]       = "monospace:size=10";
@@ -58,9 +58,10 @@ static const char *const autostart[] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[] = {
+/*
+static const Rule rules[] = {*/
 	/* class            instance      title       tags mask     isfloating   opacity      monitor */
-	{ "Gimp",           NULL,         NULL,       0,            1,           1.0,             -1 },
+/*	{ "Gimp",           NULL,         NULL,       0,            1,           1.0,             -1 },
 	{ "firefox",        "Navigator",  NULL,       0,            0,           1.0,             -1 },
 	{ "firefox",        "Devtools",   NULL,       0,            1,           1.0,             -1 },
 	{ "firefox",        "Places",     "Library",  0,            1,           1.0,             -1 },
@@ -69,6 +70,19 @@ static const Rule rules[] = {
 	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           defaultopacity,  -1 },
         { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           defaultopacity,  -1 },
     { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           defaultopacity,  -1 },
+};
+*/
+static const Rule rules[] = {
+	/* class            instance      title       tags mask     isfloating   monitor */
+	{ "Gimp",           NULL,         NULL,       0,            1,           -1 },
+	{ "firefox",        "Navigator",  NULL,       0,            0,           -1 },
+	{ "firefox",        "Devtools",   NULL,       0,            1,           -1 },
+	{ "firefox",        "Places",     "Library",  0,            1,           -1 },
+	{ "firefox",        "Firefox",     "Quit and close tabs?",  0, 1,        -1 },
+	{ "Gnome-terminal", NULL,         NULL,       0,            0,           -1 },
+	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           -1 },
+        { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           -1 },
+    { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           -1 },
 };
 
 /* layout(s) */
@@ -102,7 +116,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-h", "23", NULL };
+static const char *dmenucmd[] = { "dmenu_run_i", "-m", dmenumon, "-h", "23", NULL };
 static const char *roficmd[] = { "rofi_launcher.sh", NULL };
 static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
@@ -112,8 +126,8 @@ static const char *browsercmd[]  = { "firefox", NULL };
 
 static Key keys[] = {
 	/* modifier                     key                         function            argument */
-	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Rofi/Dmenu
-	{ MODKEY|ShiftMask,             XK_d,                       spawn,              {.v = roficmd} },                  // Spawn Rofi/Dmenu
+	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Dmenu
+	{ MODKEY|ShiftMask,             XK_d,                       spawn,              {.v = roficmd} },                   // Spawn Rofi
 	{ MODKEY,                       XK_Return,                  spawn,              {.v = termcmd } },                  // Spawn Terminal
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = termcmd } },                  // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = musiccmd } },                 // Spawn Cmus
@@ -168,8 +182,8 @@ static Key keys[] = {
         { MODKEY,                       XK_equal,                   setgaps,            {.i = +5 } },                       // Set Gaps ++
         { MODKEY|ShiftMask,             XK_minus,                   setgaps,            {.i = GAP_RESET } },                // Reset Gaps
         { MODKEY|ShiftMask,             XK_equal,                   setgaps,            {.i = GAP_TOGGLE } },               // Toggle Gaps
-	{ MODKEY|ShiftMask,		XK_KP_Add,                  changeopacity,      {.f = +0.1}},                       // Change Opacity ++
-	{ MODKEY|ShiftMask,		XK_KP_Subtract,             changeopacity,      {.f = -0.1}},                       // Change Opacity --
+//	{ MODKEY|ShiftMask,		XK_KP_Add,                  changeopacity,      {.f = +0.1}},                       // Change Opacity ++
+//	{ MODKEY|ShiftMask,		XK_KP_Subtract,             changeopacity,      {.f = -0.1}},                       // Change Opacity --
 	TAGKEYS(                        XK_1,                                           0)
 	TAGKEYS(                        XK_2,                                           1)
 	TAGKEYS(                        XK_3,                                           2)
