@@ -222,7 +222,10 @@ static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void opacity(Client *c, double opacity);
 static void pop(Client *);
+static Client *prevtiled(Client *c);
 static void propertynotify(XEvent *e);
+static void pushdown(const Arg *arg);
+static void pushup(const Arg *arg);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -925,12 +928,12 @@ drawbar(Monitor *m)
 	if ((w = m->ww - tw - stw - x) > bh) {
 		if (m->sel) {
                         /* fix overflow when window name is bigger than window width */
-                        int mid = (m->ww - (int)TEXTW(m->sel->name)) / 2 - x;
+                        //int mid = (m->ww - (int)TEXTW(m->sel->name)) / 2 - x;
                         /* make sure name will not overlap on tags even when it is very long */
-                        mid = mid >= lrpad / 2 ? mid : lrpad / 2;
+                        //mid = mid >= lrpad / 2 ? mid : lrpad / 2;
 			drw_setscheme(drw, scheme[m == selmon ? SchemeInfoSel : SchemeInfoNorm]);
-//			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-			drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);
+			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			//drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);
                         if (m->sel->isfloating) {
                             drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
                             if (m->sel->isalwaysontop)
@@ -1447,6 +1450,16 @@ pop(Client *c)
 	arrange(c->mon);
 }
 
+Client *
+prevtiled(Client *c) {
+	Client *p, *r;
+
+	for(p = selmon->clients, r = NULL; p && p != c; p = p->next)
+		if(!p->isfloating && ISVISIBLE(p))
+			r = p;
+	return r;
+}
+
 void
 propertynotify(XEvent *e)
 {
@@ -1492,6 +1505,49 @@ propertynotify(XEvent *e)
 		if (ev->atom == netatom[NetWMWindowType])
 			updatewindowtype(c);
 	}
+}
+
+void
+pushdown(const Arg *arg) {
+	Client *sel = selmon->sel, *c;
+
+	if(!sel || sel->isfloating)
+		return;
+	if((c = nexttiled(sel->next))) {
+		detach(sel);
+		sel->next = c->next;
+		c->next = sel;
+	} else {
+		detach(sel);
+		attach(sel);
+	}
+	focus(sel);
+	arrange(selmon);
+}
+
+void
+pushup(const Arg *arg) {
+	Client *sel = selmon->sel, *c;
+
+	if(!sel || sel->isfloating)
+		return;
+	if((c = prevtiled(sel))) {
+		detach(sel);
+		sel->next = c;
+		if(selmon->clients == c)
+			selmon->clients = sel;
+		else {
+			for(c = selmon->clients; c->next != sel->next; c = c->next);
+			c->next = sel;
+		}
+	} else {
+		for(c = sel; c->next; c = c->next);
+		detach(sel);
+		sel->next = NULL;
+		c->next = sel;
+	}
+	focus(sel);
+	arrange(selmon);
 }
 
 void
