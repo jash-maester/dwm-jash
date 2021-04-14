@@ -108,6 +108,8 @@ static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
+#include "selfrestart.c"
+
 static Key keys[] = {
 	/* modifier                     key                         function            argument */
 	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Rofi/Dmenu
@@ -152,7 +154,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,                       setlayout,          {.v = &layouts[0]} },               // Set Default Tiling Layout
         { MODKEY|ControlMask,           XK_KP_Subtract,             cyclelayout,        {.i = -1 } },                       // Cycle Between Layouts --
         { MODKEY|ControlMask,           XK_KP_Add,                  cyclelayout,        {.i = +1 } },                       // Cycle Between Layouts ++
-//	{ MODKEY,                       XK_space,                   setlayout,          {0} },
 	{ MODKEY,                       XK_space,                   togglefloating,     {0} },                              // Toggle Floating Window
         { MODKEY|ShiftMask,             XK_f,                       togglefullscr,      {0} },                              // Toggle Fullscreen
         { MODKEY|ShiftMask,             XK_space,                   togglealwaysontop,  {0} },                              // Toggle Always on-top floating
@@ -177,6 +178,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                           6)
 	TAGKEYS(                        XK_8,                                           7)
 	TAGKEYS(                        XK_9,                                           8)
+        {MODKEY|ShiftMask,              XK_r,                       self_restart,       {0} },                              // Restart DWM Magically
 	{ MODKEY|ShiftMask,             XK_c,                       quit,               {0} },                              // Kill DWM and logout
 };
 
