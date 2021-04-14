@@ -41,7 +41,6 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
         "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
         "sh", "-c", "~/.fehbg", NULL,
-        "picom", "-b", "--experimental-backend", NULL,
         "libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL,
         "numlockx", "on", NULL,
         "/usr/bin/dunst", NULL,
@@ -52,6 +51,7 @@ static const char *const autostart[] = {
         "optimus-manager-qt", NULL,
         "nm-applet", NULL,
         "dwmblocks", NULL,
+        "picom", "-b", "--experimental-backend", NULL,
 	NULL /* terminate */
 };
 
@@ -109,79 +109,75 @@ static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd} },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ ControlMask|Mod1Mask,         XK_t,      spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_F3,     spawn,          {.v = musiccmd } },
-	{ MODKEY,                       XK_F1,     spawn,          {.v = browsercmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
-	{ MODKEY|ControlMask,           XK_k,      pushup,         {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_u,      incnmaster,     {.i = -1 } },
-        { MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
-        { MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
-        { MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ Mod1Mask,                     XK_F4,     killclient,     {0} },
-	{ MODKEY,                       XK_Escape, killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ControlMask,           XK_c,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY|ControlMask|ShiftMask, XK_f,      setlayout,      {.v = &layouts[4]} },
-        { MODKEY|ControlMask,     XK_KP_Subtract,  cyclelayout,    {.i = -1 } },
-        { MODKEY|ControlMask,           XK_KP_Add, cyclelayout,    {.i = +1 } },
-//	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY,                       XK_space,  togglefloating, {0} },
-        { MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-        { MODKEY|ShiftMask,             XK_space,  togglealwaysontop,  {0} },
-//	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-//	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-        { MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
-        { MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
-        { MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
-        { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE } },
-	{ MODKEY|ShiftMask,		XK_KP_Add, changeopacity,	{.f = +0.1}},
-	{ MODKEY|ShiftMask,		XK_KP_Subtract, changeopacity,  {.f = -0.1}},
-        { MODKEY|ControlMask,           XK_m,         spawn,       SHCMD("pavucontrol") },
-        { 0, XF86XK_Calculator,         spawn,                     SHCMD("gnome-calculator") },
-        { 0, XF86XK_Launch1,            spawn,                     SHCMD("nautilus") },
-        { 0, XF86XK_MonBrightnessUp,    spawn,                     SHCMD("light -A 5") },
-        { 0, XF86XK_MonBrightnessDown,  spawn,                     SHCMD("light -U 5") },
-        { 0, XF86XK_KbdBrightnessUp,    spawn,                     SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh increase") },
-        { 0, XF86XK_KbdBrightnessDown,  spawn,                     SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh decrease") },
-        { 0,                            XK_Print,  spawn,          SHCMD("screenshot-full") },
-        { ShiftMask,                    XK_Print,  spawn,          SHCMD("screenshot-sel") },
-        { 0, XF86XK_AudioRaiseVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
-        { 0, XF86XK_AudioLowerVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
-        { 0, XF86XK_AudioMute,          spawn,                     SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
-        { 0, XF86XK_AudioPlay,          spawn,                     SHCMD("playerctl play-pause") },
-        { 0, XF86XK_AudioStop,          spawn,                     SHCMD("playerctl play") },
-        { 0, XF86XK_AudioNext,          spawn,                     SHCMD("playerctl next") },
-        { 0, XF86XK_AudioPrev,          spawn,                     SHCMD("playerctl previous") },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
+	/* modifier                     key                         function            argument */
+	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Rofi/Dmenu
+	{ MODKEY,                       XK_Return,                  spawn,              {.v = termcmd } },                  // Spawn Terminal
+	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = termcmd } },                  // Spawn Terminal
+	{ MODKEY,                       XK_F3,                      spawn,              {.v = musiccmd } },                 // Spawn Cmus
+	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
+        { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
+        { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
+        { 0,                            XF86XK_Launch1,             spawn,              SHCMD("nautilus") },
+        { 0,                            XF86XK_MonBrightnessUp,     spawn,              SHCMD("light -A 5") },
+        { 0,                            XF86XK_MonBrightnessDown,   spawn,              SHCMD("light -U 5") },
+        { 0,                            XF86XK_KbdBrightnessUp,     spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh increase") },
+        { 0,                            XF86XK_KbdBrightnessDown,   spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh decrease") },
+        { 0,                            XK_Print,                   spawn,              SHCMD("screenshot-full") },
+        { ShiftMask,                    XK_Print,                   spawn,              SHCMD("screenshot-sel") },
+        { 0,                            XF86XK_AudioRaiseVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
+        { 0,                            XF86XK_AudioLowerVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
+        { 0,                            XF86XK_AudioMute,           spawn,              SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
+        { 0,                            XF86XK_AudioPlay,           spawn,              SHCMD("playerctl play-pause") },
+        { 0,                            XF86XK_AudioStop,           spawn,              SHCMD("playerctl play") },
+        { 0,                            XF86XK_AudioNext,           spawn,              SHCMD("playerctl next") },
+        { 0,                            XF86XK_AudioPrev,           spawn,              SHCMD("playerctl previous") },
+	{ MODKEY,                       XK_b,                       togglebar,          {0} },                              // Toggle DWM Bar
+	{ MODKEY|ShiftMask,             XK_j,                       rotatestack,        {.i = +1 } },                       // Rotate the Current Stack ++
+	{ MODKEY|ShiftMask,             XK_k,                       rotatestack,        {.i = -1 } },                       // Rotate the Current Stack --
+	{ MODKEY|ControlMask,           XK_j,                       pushdown,           {0} },                              // Push Clients/Windows Down the stack
+	{ MODKEY|ControlMask,           XK_k,                       pushup,             {0} },                              // Push Clients/Windows Up the stack
+	{ MODKEY,                       XK_j,                       focusstack,         {.i = +1 } },                       // Change focus to windows in the current stack
+	{ MODKEY,                       XK_k,                       focusstack,         {.i = -1 } },                       // Change focus to windows in the current stack
+	{ MODKEY,                       XK_h,                       setmfact,           {.f = -0.05} },                     // Change the horizontal ratio of tiled windows
+	{ MODKEY,                       XK_l,                       setmfact,           {.f = +0.05} },                     // Change the horizontal ratio of tiled windows
+	{ MODKEY,                       XK_i,                       incnmaster,         {.i = +1 } },                       // Re-arrange Tiled windows in the stack
+	{ MODKEY,                       XK_u,                       incnmaster,         {.i = -1 } },                       // Re-arrange Tiled windows in the stack
+        { MODKEY|ShiftMask,             XK_h,                       setcfact,           {.f = +0.25} },                     // Change the vertical ratio of tiled windows
+        { MODKEY|ShiftMask,             XK_l,                       setcfact,           {.f = -0.25} },                     // Change the vertical ratio of tiled windows
+        { MODKEY|ShiftMask,             XK_o,                       setcfact,           {.f =  0.00} },                     // Reset to default Vertical Ratio
+	{ MODKEY|ShiftMask,             XK_Return,                  zoom,               {0} },                              // Puts the selected window to Master
+	{ MODKEY,                       XK_Tab,                     view,               {0} },
+	{ Mod1Mask,                     XK_F4,                      killclient,         {0} },                              // Kill Client/Window
+	{ MODKEY,                       XK_Escape,                  killclient,         {0} },                              // Kill Client/Window
+	{ MODKEY,                       XK_t,                       setlayout,          {.v = &layouts[0]} },               // Set Default Tiling Layout
+        { MODKEY|ControlMask,           XK_KP_Subtract,             cyclelayout,        {.i = -1 } },                       // Cycle Between Layouts --
+        { MODKEY|ControlMask,           XK_KP_Add,                  cyclelayout,        {.i = +1 } },                       // Cycle Between Layouts ++
+//	{ MODKEY,                       XK_space,                   setlayout,          {0} },
+	{ MODKEY,                       XK_space,                   togglefloating,     {0} },                              // Toggle Floating Window
+        { MODKEY|ShiftMask,             XK_f,                       togglefullscr,      {0} },                              // Toggle Fullscreen
+        { MODKEY|ShiftMask,             XK_space,                   togglealwaysontop,  {0} },                              // Toggle Always on-top floating
+//	{ MODKEY,                       XK_0,                       view,               {.ui = ~0 } },
+//	{ MODKEY|ShiftMask,             XK_0,                       tag,                {.ui = ~0 } },
+	{ MODKEY,                       XK_comma,                   focusmon,           {.i = -1 } },                       // Focus change monitors
+	{ MODKEY,                       XK_period,                  focusmon,           {.i = +1 } },                       // Focus change monitors
+	{ MODKEY|ShiftMask,             XK_comma,                   tagmon,             {.i = -1 } },                       // Move windows to different monitors
+	{ MODKEY|ShiftMask,             XK_period,                  tagmon,             {.i = +1 } },                       // Move windows to different monitors
+        { MODKEY,                       XK_minus,                   setgaps,            {.i = -5 } },                       // Set Gaps --
+        { MODKEY,                       XK_equal,                   setgaps,            {.i = +5 } },                       // Set Gaps ++
+        { MODKEY|ShiftMask,             XK_minus,                   setgaps,            {.i = GAP_RESET } },                // Reset Gaps
+        { MODKEY|ShiftMask,             XK_equal,                   setgaps,            {.i = GAP_TOGGLE } },               // Toggle Gaps
+	{ MODKEY|ShiftMask,		XK_KP_Add,                  changeopacity,      {.f = +0.1}},                       // Change Opacity ++
+	{ MODKEY|ShiftMask,		XK_KP_Subtract,             changeopacity,      {.f = -0.1}},                       // Change Opacity --
+	TAGKEYS(                        XK_1,                                           0)
+	TAGKEYS(                        XK_2,                                           1)
+	TAGKEYS(                        XK_3,                                           2)
+	TAGKEYS(                        XK_4,                                           3)
+	TAGKEYS(                        XK_5,                                           4)
+	TAGKEYS(                        XK_6,                                           5)
+	TAGKEYS(                        XK_7,                                           6)
+	TAGKEYS(                        XK_8,                                           7)
+	TAGKEYS(                        XK_9,                                           8)
+	{ MODKEY|ShiftMask,             XK_c,                       quit,               {0} },                              // Kill DWM and logout
 };
 
 /* button definitions */
