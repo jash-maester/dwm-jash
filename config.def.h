@@ -39,19 +39,23 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-        "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+        //"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+        "systemctl", "--user", "import-environment", "DISPLAY", NULL,
+        "/usr/libexec/polkitd", "--no-debug", NULL,
         "sh", "-c", "~/.fehbg", NULL,
-        "libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL,
+        //"libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL,
+        "touchegg", "--quiet", NULL,
         "numlockx", "on", NULL,
         "/usr/bin/dunst", NULL,
-        "clipit", NULL,
+        //"clipit", NULL, // Replace with clipmenu (Super + C)
+        "clipmenud", NULL,
 	"gnome-terminal", NULL,
-        "discord", NULL,
-        "kdeconnect-indicator", NULL,
-        "optimus-manager-qt", NULL,
-        "nm-applet", NULL,
+        //"optimus-manager-qt", NULL,
+        //"nm-applet", NULL,
         "dwmblocks", NULL,
         "picom", "-b", "--experimental-backend", NULL,
+        "discord", NULL,
+        "/usr/bin/kdeconnect-indicator", NULL,
 	NULL /* terminate */
 };
 
@@ -70,6 +74,7 @@ static const Rule rules[] = {*/
 	{ "Gnome-terminal", NULL,         NULL,       0,            0,           defaultopacity,  -1 },
 	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           defaultopacity,  -1 },
         { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           defaultopacity,  -1 },
+        { "mpv",            NULL,         NULL,       0,            1,           defaultopacity,  -1 },
     { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           defaultopacity,  -1 },
 };
 */
@@ -79,10 +84,12 @@ static const Rule rules[] = {
 	{ "firefox",        "Navigator",  NULL,       0,            0,           -1 },
 	{ "firefox",        "Devtools",   NULL,       0,            1,           -1 },
 	{ "firefox",        "Places",     "Library",  0,            1,           -1 },
-	{ "firefox",        "Firefox",     "Quit and close tabs?",  0, 1,        -1 },
+	{ "firefox",        "Firefox",    "Quit and close tabs?",   0, 1,        -1 },
+	{ "jetbrains-toolbox",  NULL,     NULL,       0,            1,           -1 },
 	{ "Gnome-terminal", NULL,         NULL,       0,            0,           -1 },
 	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           -1 },
         { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           -1 },
+        { "mpv",            NULL,         NULL,       0,            1,           -1 },
     { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           -1 },
 };
 
@@ -134,6 +141,7 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = termcmd } },                  // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = musiccmd } },                 // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
+	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
         { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
         { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
         { 0,                            XF86XK_Launch1,             spawn,              SHCMD("nautilus") },
@@ -196,7 +204,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                           6)
 	TAGKEYS(                        XK_8,                                           7)
 	TAGKEYS(                        XK_9,                                           8)
-        { MODKEY|ShiftMask,              XK_r,                      self_restart,       {0} },                              // Restart DWM Magically
+        { MODKEY,                       XK_0,                       spawn,              {0} },                              // Restart DWM Magically
+        { MODKEY|ShiftMask,             XK_r,                       self_restart,       {0} },                              // Restart DWM Magically
 	{ MODKEY|ShiftMask,             XK_c,                       quit,               {0} },                              // Kill DWM and logout
 };
 
