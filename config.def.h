@@ -49,7 +49,8 @@ static const char *const autostart[] = {
         "/usr/bin/dunst", NULL,
         //"clipit", NULL, // Replace with clipmenu (Super + C)
         "clipmenud", NULL,
-	"gnome-terminal", NULL,
+	//"gnome-terminal", NULL,
+	"st", NULL,
         //"optimus-manager-qt", NULL,
         //"nm-applet", NULL,
         "dwmblocks", NULL,
@@ -126,10 +127,12 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run_i", "-m", dmenumon, "-h", "23", NULL };
 static const char *roficmd[] = { "rofi_launcher.sh", NULL };
-static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *sttermcmd[]  = { "st", NULL };
+static const char *stmusiccmd[]  = { "st", "-e", "cmus", NULL };
 static const char *updateBlockscmd[] = {"pkill", "-RTMIN+10", "dwmblocks", NULL};
-static const char *musiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
+static const char *gnometermcmd[]  = { "gnome-terminal", NULL };
+//static const char *gnomemusiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 
 #include "selfrestart.c"
 
@@ -137,9 +140,9 @@ static Key keys[] = {
 	/* modifier                     key                         function            argument */
 	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Dmenu
 	{ MODKEY|ShiftMask,             XK_d,                       spawn,              {.v = roficmd} },                   // Spawn Rofi
-	{ MODKEY,                       XK_Return,                  spawn,              {.v = termcmd } },                  // Spawn Terminal
-	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = termcmd } },                  // Spawn Terminal
-	{ MODKEY,                       XK_F3,                      spawn,              {.v = musiccmd } },                 // Spawn Cmus
+	{ MODKEY,                       XK_Return,                  spawn,              {.v = sttermcmd } },                  // Spawn Terminal
+	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },                  // Spawn Terminal
+	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },                 // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
         { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
@@ -217,8 +220,8 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
         { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
-        { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-        { ClkStatusText,        0,              Button3,        spawn,          {.v = termcmd } },
+        { ClkStatusText,        0,              Button2,        spawn,          {.v = sttermcmd } },
+        { ClkStatusText,        0,              Button3,        spawn,          {.v = gnometermcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
