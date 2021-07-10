@@ -28,6 +28,7 @@ In order to build dwm you need the Xlib header filesr, make, gcc
   - Skippy (For the Overview) : https://github.com/jash-maester/skippy-xd
     - Ubuntu: libjpeg-dev, libgif-dev
   - Flameshot : Screenshot tool
+  - Xbanish : TO hide mouse pointer while typing
 
 
 ## Installation

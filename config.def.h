@@ -55,6 +55,7 @@ static const char *const autostart[] = {
         "picom", "-b", "--experimental-backend", NULL,
         "discord", NULL,
         "/usr/bin/kdeconnect-indicator", NULL,
+        "xbanish", NULL,
 	NULL /* terminate */
 };
 
