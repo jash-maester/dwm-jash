@@ -27,6 +27,7 @@ In order to build dwm you need the Xlib header filesr, make, gcc
   - Slock: https://github.com/khuedoan/slock
   - Skippy (For the Overview) : https://github.com/jash-maester/skippy-xd
     - Ubuntu: libjpeg-dev, libgif-dev
+  - Flameshot : Screenshot tool
 
 
 ## Installation
