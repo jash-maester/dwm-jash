@@ -7,7 +7,26 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 
 ## Requirements
 ------------
-In order to build dwm you need the Xlib header files.
+In order to build dwm you need the Xlib header filesr, make, gcc
+
+### Important !!!
+  - `nobody` group is required for `slock` to work
+    ```bash
+    sudo groupadd nobody
+    ```    
+
+### Fonts:
+  - FiraCode Nerd Font
+  - Noto Sans Font
+  - Font Awesome (Optional for weather and all)
+
+### Dependencies:
+  - Clipmenu: https://github.com/cdown/clipmenu
+  - Clipnotify: https://github.com/cdown/clipnotify
+    - libxfixes-dev, libxfixes3, x11proto-core-dev, libx11-dev 
+  - Slock: https://github.com/khuedoan/slock
+  - Skippy (For the Overview) : https://github.com/jash-maester/skippy-xd
+    - Ubuntu: libjpeg-dev, libgif-dev
 
 
 ## Installation
@@ -15,10 +34,9 @@ In order to build dwm you need the Xlib header files.
 Edit config.mk to match your local setup (dwm is installed into
 the /usr/local namespace by default).
 
-Afterwards enter the following command to build and install dwm (if
-necessary as root):
+Afterwards enter the following command to build and install dwm:
 
-    make clean install
+    sudo make clean install
 
 
 ## Running dwm

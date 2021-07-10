@@ -140,10 +140,11 @@ static Key keys[] = {
 	/* modifier                     key                         function            argument */
 	{ MODKEY,                       XK_d,                       spawn,              {.v = dmenucmd} },                  // Spawn Dmenu
 	{ MODKEY|ShiftMask,             XK_d,                       spawn,              {.v = roficmd} },                   // Spawn Rofi
-	{ MODKEY,                       XK_Return,                  spawn,              {.v = sttermcmd } },                  // Spawn Terminal
-	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },                  // Spawn Terminal
-	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },                 // Spawn Cmus
+	{ MODKEY,                       XK_Return,                  spawn,              {.v = sttermcmd } },                // Spawn Terminal
+	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },             // Spawn Terminal
+	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
+	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
         { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
         { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
