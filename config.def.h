@@ -13,10 +13,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-//static const double defaultopacity  = 1.0;
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "Noto Sans:size=11", "FiraCode Nerd Font:11", "FontAwesome:size=9", "monospace:size=10" };
-//static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -43,7 +41,7 @@ static const char *const autostart[] = {
         "systemctl", "--user", "import-environment", "DISPLAY", NULL,
         "/usr/libexec/polkitd", "--no-debug", NULL,
         "sh", "-c", "~/.fehbg", NULL,
-        //"libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL,
+        //"libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL, // Replaced with Touchegg
         "touchegg", "--quiet", NULL,
         "numlockx", "on", NULL,
         "/usr/bin/dunst", NULL,
@@ -132,6 +130,7 @@ static const char *stmusiccmd[]  = { "st", "-e", "cmus", NULL };
 static const char *updateBlockscmd[] = {"pkill", "-RTMIN+10", "dwmblocks", NULL};
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *gnometermcmd[]  = { "gnome-terminal", NULL };
+
 //static const char *gnomemusiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 
 #include "selfrestart.c"
