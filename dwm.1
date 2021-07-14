@@ -37,129 +37,200 @@ prints version information to stderr, then exits.
 .SH USAGE
 .SS Status bar
 .TP
-.B X root window name
-is read and displayed in the status text area. It can be set with the
-.BR xsetroot (1)
-command.
+.B DWMBLOCKS
+is used here to display the status text. It can be set by modifying
+.BR dwmblocks(1)
+configuration.
 .TP
 .B Button1
-click on a tag label to display all windows with that tag, click on the layout
+clicking on a tag label will display all the windows associated with that tag, click on the layout
 label toggles between tiled and floating layout.
 .TP
 .B Button3
-click on a tag label adds/removes all windows with that tag to/from the view.
+clicking on a tag label adds/removes all windows associated with that tag to/from the current tag/view.
 .TP
-.B Mod1\-Button1
-click on a tag label applies that tag to the focused window.
+.B ModKey\-Button1
+click on a tag label moves the current focused window to that tag.
 .TP
-.B Mod1\-Button3
+.B ModKey\-Button3
 click on a tag label adds/removes that tag to/from the focused window.
 .SS Keyboard commands
 .TP
-.B Mod1\-Shift\-Return
+.B ModKey\-Return
 Start
 .BR st(1).
 .TP
-.B Mod1\-p
+.B ModKey\-d
 Spawn
 .BR dmenu(1)
+for launching programs.
+.TP
+.B ModKey\-Shift\-d
+Spawn
+.BR rofi(1)
 for launching other programs.
 .TP
-.B Mod1\-,
+.B ModKey\-,
 Focus previous screen, if any.
 .TP
-.B Mod1\-.
+.B ModKey\-.
 Focus next screen, if any.
 .TP
-.B Mod1\-Shift\-,
+.B ModKey\-Shift\-,
 Send focused window to previous screen, if any.
 .TP
-.B Mod1\-Shift\-.
+.B ModKey\-Shift\-.
 Send focused window to next screen, if any.
 .TP
-.B Mod1\-b
+.B ModKey\--
+Decrease Gaps.
+.TP
+.B ModKey\-=
+Increase Gaps.
+.TP
+.B ModKey\-Shift\--
+Reset Gaps.
+.TP
+.B ModKey\-Shift\-=
+Toggles Gaps.
+.TP
+.B ModKey\-b
 Toggles bar on and off.
 .TP
-.B Mod1\-t
+.B ModKey\-t
 Sets tiled layout.
 .TP
-.B Mod1\-f
-Sets floating layout.
+.B ModKey\-space
+Toggles floating.
 .TP
-.B Mod1\-m
-Sets monocle layout.
+.B ModKey\-Shift\-f
+Toggles fullscreen.
 .TP
-.B Mod1\-space
-Toggles between current and previous layout.
+.B ModKey\-Shift\-space
+Toggles Always-On-Top for floating windows.
 .TP
-.B Mod1\-Control\-,
+.B ModKey\-Control\-Minus
 Cycles backwards in layout list.
 .TP
-.B Mod1\-Control\-.
+.B ModKey\-Control\-Equals
 Cycles forwards in layout list.
 .TP
-.B Mod1\-j
-Focus next window.
+.B ModKey\-j
+Focus on next window/client.
 .TP
-.B Mod1\-k
-Focus previous window.
+.B ModKey\-k
+Focus on previous window/client.
 .TP
-.B Mod1\-i
+.B ModKey\-Shift\-Return
+"Zooms" onto a window/client.
+.TP
+.B ModKey\-l
+Increase master area size or Horizontal Split Ratio.
+.TP
+.B ModKey\-h
+Decrease master area size or Horizontal Split Ratio.
+.TP
+.B ModKey\-o
+Reset master area size or Horizontal Split Ratio.
+.TP
+.B ModKey\-Shift\-j
+Rotates the Window Stack Clockwise.
+.TP
+.B ModKey\-Shift\-k
+Rotates the Window Stack Anti-Clockwise.
+.TP
+.B ModKey\-Control\-j
+Push the Window Stack Down.
+.TP
+.B ModKey\-Control\-k
+Push the Window Stack Up.
+.TP
+.B ModKey\-i
 Increase number of windows in master area.
 .TP
-.B Mod1\-d
+.B ModKey\-u
 Decrease number of windows in master area.
 .TP
-.B Mod1\-l
-Increase master area size.
+.B ModKey\-[1..n]
+Switch view to the nth tag.
 .TP
-.B Mod1\-h
-Decrease master area size.
+.B ModKey\-Shift\-[1..n]
+Move focused window to nth Tag.
 .TP
-.B Mod1\-Return
-Zooms/cycles focused window to/from master area (tiled layouts only).
-.TP
-.B Mod1\-Shift\-c
-Close focused window.
-.TP
-.B Mod1\-Shift\-space
-Toggle focused window between tiled and floating state.
-.TP
-.B Mod1\-Tab
+.B ModKey\-Tab
 Toggles to the previously selected tags.
 .TP
-.B Mod1\-Shift\-[1..n]
-Apply nth tag to focused window.
-.TP
-.B Mod1\-Shift\-0
-Apply all tags to focused window.
-.TP
-.B Mod1\-Control\-Shift\-[1..n]
-Add/remove nth tag to/from focused window.
-.TP
-.B Mod1\-[1..n]
-View all windows with nth tag.
-.TP
-.B Mod1\-0
-View all windows with any tag.
-.TP
-.B Mod1\-Control\-[1..n]
+.B ModKey\-Control\-[1..n]
 Add/remove all windows with nth tag to/from the view.
 .TP
-.B Mod1\-Shift\-q
+.B ModKey\-Control\-Shift\-[1..n]
+Add/remove nth tag to/from focused window.
+.TP
+.B ModKey\-Escape
+Close focused window.
+.TP
+.B ModKey\-Control\-l
+Lock Dwm using Slock.
+.TP
+.B Alt\-F4
+Alternate Close focused window.
+.TP
+.B ModKey\-Shift\-r
+Restarts DWM using the self-restart patch (Doesn't work at all times).
+.TP
+.B ModKey\-Shift\-c
 Quit dwm.
+.SS Launching Applications
+.B ModKey\-d
+Launch Dmenu.
+.TP
+.B ModKey\-Shift\-d
+Launch Rofi.
+.TP
+.B ModKey\-Return
+Launch Suckless Terminal (St).
+.TP
+.B Control\-Alt\-t
+Launch Gnome Terminal.
+.TP
+.B ModKey\-F1
+Launch Firefox Browser.
+.TP
+.B ModKey\-F3
+Launch Cmus in St.
+.TP
+.B ModKey\-a
+Launch Overview (skippy-xd).
+.TP
+.B ModKey\-c
+Launch Clipmenu (clipboard).
+.TP
+.B ModKey\-Control\-m
+Launch Pavucontrol.
+.TP
+.B XF86_Calculator
+Launch Gnome-Calculator.
+.TP
+.B Launch1
+Launch Nautilus.
+.TP
+.B PrintScreen
+Take Screenshot of the whole screen (focused monitor) using Flameshot.
+.TP
+.B Shift\-PrintScreen
+Take Screenshot of a section of the screen using Flameshot.
 .SS Mouse commands
 .TP
-.B Mod1\-Button1
+.B ModKey\-Button1
 Move focused window while dragging. Tiled windows will be toggled to the floating state.
 .TP
-.B Mod1\-Button2
+.B ModKey\-Button2 (Dragging)
 Toggles focused window between floating and tiled state.
 .TP
-.B Mod1\-Button3
+.B ModKey\-Button3
 Resize focused window while dragging. Tiled windows will be toggled to the floating state.
 .SH CUSTOMIZATION
-dwm is customized by creating a custom config.h and (re)compiling the source
+dwm is customized by creating a custom config.def.h and (re)compiling the source
 code. This keeps it fast, secure and simple.
 .SH SEE ALSO
 .BR dmenu (1),

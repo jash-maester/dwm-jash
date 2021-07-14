@@ -4,7 +4,6 @@
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
 
-
 ## Requirements
 ------------
 In order to build dwm you need the Xlib header filesr, make, gcc
@@ -21,6 +20,7 @@ In order to build dwm you need the Xlib header filesr, make, gcc
   - Font Awesome (Optional for weather and all)
 
 ### Dependencies:
+  - Xlib, libXft, and Xinerama header files
   - Clipmenu: https://github.com/cdown/clipmenu
   - Clipnotify: https://github.com/cdown/clipnotify
     - libxfixes-dev, libxfixes3, x11proto-core-dev, libx11-dev 
@@ -66,5 +66,5 @@ like this in your .xinitrc:
 
 ## Configuration
 -------------
-The configuration of dwm is done by creating a custom config.h
+The configuration of dwm is done by creating a custom config.def.h
 and (re)compiling the source code.

@@ -28,34 +28,34 @@ static const char *colors[][3]      = {
 	/*                  fg         bg         border   */
 	[SchemeNorm]    = { nord[4], nord[0], nord[0] },
 	[SchemeSel]     = { nord[0], nord[9],  nord[9]  },
-        [SchemeUrg]     = { nord[0], nord[11],  nord[11]  },
+    [SchemeUrg]     = { nord[0], nord[11],  nord[11]  },
 	[SchemeStatus]  = { nord[4], nord[0],  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = { nord[0], nord[9],  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-        [SchemeTagsNorm]= { nord[4], nord[0],  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-        [SchemeInfoSel] = { nord[0], nord[9],  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-        [SchemeInfoNorm]= { nord[4], nord[0],  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]= { nord[4], nord[0],  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel] = { nord[0], nord[9],  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]= { nord[4], nord[0],  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {
-        //"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
-        "systemctl", "--user", "import-environment", "DISPLAY", NULL,
-        "/usr/libexec/polkitd", "--no-debug", NULL,
-        "sh", "-c", "~/.fehbg", NULL,
-        //"libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL, // Replaced with Touchegg
-        "touchegg", "--quiet", NULL,
-        "numlockx", "on", NULL,
-        "/usr/bin/dunst", NULL,
-        //"clipit", NULL, // Replace with clipmenu (Super + C)
-        "clipmenud", NULL,
+    //"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+    "systemctl", "--user", "import-environment", "DISPLAY", NULL,
+    "/usr/libexec/polkitd", "--no-debug", NULL,
+    "sh", "-c", "~/.fehbg", NULL,
+    //"libinput-gestures", "-c", "/home/jash_maester/.config/libinput-gestures.conf", NULL, // Replaced with Touchegg
+    "touchegg", "--quiet", NULL,
+    "numlockx", "on", NULL,
+    "/usr/bin/dunst", NULL,
+    //"clipit", NULL, // Replace with clipmenu (Super + C)
+    "clipmenud", NULL,
 	//"gnome-terminal", NULL,
 	"st", NULL,
-        //"optimus-manager-qt", NULL,
-        //"nm-applet", NULL,
-        "dwmblocks", NULL,
-        "picom", "-b", "--experimental-backend", NULL,
-        "discord", NULL,
-        "/usr/bin/kdeconnect-indicator", NULL,
-        "xbanish", NULL,
+    //"optimus-manager-qt", NULL,
+    //"nm-applet", NULL,
+    "dwmblocks", NULL,
+    "picom", "-b", "--experimental-backend", NULL,
+    "discord", NULL,
+    "/usr/bin/kdeconnect-indicator", NULL,
+    "xbanish", NULL,
 	NULL /* terminate */
 };
 
@@ -88,8 +88,8 @@ static const Rule rules[] = {
 	{ "jetbrains-toolbox",  NULL,     NULL,       0,            1,           -1 },
 	{ "Gnome-terminal", NULL,         NULL,       0,            0,           -1 },
 	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           -1 },
-        { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           -1 },
-        { "mpv",            NULL,         NULL,       0,            1,           -1 },
+    { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           -1 },
+    { "mpv",            NULL,         NULL,       0,            1,           -1 },
     { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           -1 },
 };
 
@@ -107,8 +107,8 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
-        { "###",      horizgrid },
-        { NULL,       NULL},
+    { "###",      horizgrid },
+    { NULL,       NULL},
 };
 
 /* key definitions */
@@ -146,23 +146,23 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
-        { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
-        { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
-        { 0,                            XF86XK_Launch1,             spawn,              SHCMD("nautilus") },
-        { 0,                            XF86XK_MonBrightnessUp,     spawn,              SHCMD("light -A 5") },
-        { 0,                            XF86XK_MonBrightnessDown,   spawn,              SHCMD("light -U 5") },
-        { 0,                            XF86XK_KbdBrightnessUp,     spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh increase") },
-        { 0,                            XF86XK_KbdBrightnessDown,   spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh decrease") },
-        { 0,                            XK_Print,                   spawn,              SHCMD("flameshot screen -p ~/Pictures/screenshots") },
-        { ShiftMask,                    XK_Print,                   spawn,              SHCMD("flameshot gui -p ~/Pictures/screenshots") },
-        { 0,                            XF86XK_AudioRaiseVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
-        { 0,                            XF86XK_AudioLowerVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
-        { 0,                            XF86XK_AudioMute,           spawn,              SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
-        { 0,                            XF86XK_AudioPlay,           spawn,              SHCMD("playerctl play-pause") },
-        { 0,                            XF86XK_AudioStop,           spawn,              SHCMD("playerctl play") },
-        { 0,                            XF86XK_AudioNext,           spawn,              SHCMD("playerctl next") },
-        { 0,                            XF86XK_AudioPrev,           spawn,              SHCMD("playerctl previous") },
-        { MODKEY|ControlMask,           XK_l,                       spawn,              SHCMD("slock") },
+    { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
+    { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
+    { 0,                            XF86XK_Launch1,             spawn,              SHCMD("nautilus") },
+    { 0,                            XF86XK_MonBrightnessUp,     spawn,              SHCMD("light -A 5") },
+    { 0,                            XF86XK_MonBrightnessDown,   spawn,              SHCMD("light -U 5") },
+    { 0,                            XF86XK_KbdBrightnessUp,     spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh increase") },
+    { 0,                            XF86XK_KbdBrightnessDown,   spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh decrease") },
+    { 0,                            XK_Print,                   spawn,              SHCMD("flameshot screen -p ~/Pictures/screenshots") },
+    { ShiftMask,                    XK_Print,                   spawn,              SHCMD("flameshot gui -p ~/Pictures/screenshots") },
+    { 0,                            XF86XK_AudioRaiseVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
+    { 0,                            XF86XK_AudioMute,           spawn,              SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
+    { 0,                            XF86XK_AudioPlay,           spawn,              SHCMD("playerctl play-pause") },
+    { 0,                            XF86XK_AudioStop,           spawn,              SHCMD("playerctl play") },
+    { 0,                            XF86XK_AudioNext,           spawn,              SHCMD("playerctl next") },
+    { 0,                            XF86XK_AudioPrev,           spawn,              SHCMD("playerctl previous") },
+    { MODKEY|ControlMask,           XK_l,                       spawn,              SHCMD("slock") },
 	{ MODKEY,                       XK_b,                       togglebar,          {0} },                              // Toggle DWM Bar
 	{ MODKEY|ShiftMask,             XK_j,                       rotatestack,        {.i = +1 } },                       // Rotate the Current Stack ++
 	{ MODKEY|ShiftMask,             XK_k,                       rotatestack,        {.i = -1 } },                       // Rotate the Current Stack --
@@ -172,33 +172,32 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,                       focusstack,         {.i = -1 } },                       // Change focus to windows in the current stack
 	{ MODKEY,                       XK_h,                       setmfact,           {.f = -0.05} },                     // Change the horizontal ratio of tiled windows
 	{ MODKEY,                       XK_l,                       setmfact,           {.f = +0.05} },                     // Change the horizontal ratio of tiled windows
+	{ MODKEY,                       XK_o,                       setmfact,           {.f = 0} },                         // Resets the horizontal ratio of tiled windows
 	{ MODKEY,                       XK_i,                       incnmaster,         {.i = +1 } },                       // Re-arrange Tiled windows in the stack
 	{ MODKEY,                       XK_u,                       incnmaster,         {.i = -1 } },                       // Re-arrange Tiled windows in the stack
-        { MODKEY|ShiftMask,             XK_h,                       setcfact,           {.f = +0.25} },                     // Change the vertical ratio of tiled windows
-        { MODKEY|ShiftMask,             XK_l,                       setcfact,           {.f = -0.25} },                     // Change the vertical ratio of tiled windows
-        { MODKEY|ShiftMask,             XK_o,                       setcfact,           {.f =  0.00} },                     // Reset to default Vertical Ratio
+    { MODKEY|ShiftMask,             XK_h,                       setcfact,           {.f = +0.25} },                     // Change the vertical ratio of tiled windows
+    { MODKEY|ShiftMask,             XK_l,                       setcfact,           {.f = -0.25} },                     // Change the vertical ratio of tiled windows
+    { MODKEY|ShiftMask,             XK_o,                       setcfact,           {.f =  0.00} },                     // Reset to default Vertical Ratio
 	{ MODKEY|ShiftMask,             XK_Return,                  zoom,               {0} },                              // Puts the selected window to Master
 	{ MODKEY,                       XK_Tab,                     view,               {0} },
 	{ Mod1Mask,                     XK_F4,                      killclient,         {0} },                              // Kill Client/Window
 	{ MODKEY,                       XK_Escape,                  killclient,         {0} },                              // Kill Client/Window
 	{ MODKEY,                       XK_t,                       setlayout,          {.v = &layouts[0]} },               // Set Default Tiling Layout
-        { MODKEY|ControlMask,           XK_KP_Subtract,             cyclelayout,        {.i = -1 } },                       // Cycle Between Layouts --
-        { MODKEY|ControlMask,           XK_KP_Add,                  cyclelayout,        {.i = +1 } },                       // Cycle Between Layouts ++
+    { MODKEY|ControlMask,           XK_minus,                   cyclelayout,        {.i = -1 } },                       // Cycle Between Layouts --
+    { MODKEY|ControlMask,           XK_equal,                   cyclelayout,        {.i = +1 } },                       // Cycle Between Layouts ++
 	{ MODKEY,                       XK_space,                   togglefloating,     {0} },                              // Toggle Floating Window
-        { MODKEY|ShiftMask,             XK_f,                       togglefullscr,      {0} },                              // Toggle Fullscreen
-        { MODKEY|ShiftMask,             XK_space,                   togglealwaysontop,  {0} },                              // Toggle Always on-top floating
+    { MODKEY|ShiftMask,             XK_f,                       togglefullscr,      {0} },                              // Toggle Fullscreen
+    { MODKEY|ShiftMask,             XK_space,                   togglealwaysontop,  {0} },                              // Toggle Always on-top floating
 //	{ MODKEY,                       XK_0,                       view,               {.ui = ~0 } },
 //	{ MODKEY|ShiftMask,             XK_0,                       tag,                {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,                   focusmon,           {.i = -1 } },                       // Focus change monitors
 	{ MODKEY,                       XK_period,                  focusmon,           {.i = +1 } },                       // Focus change monitors
 	{ MODKEY|ShiftMask,             XK_comma,                   tagmon,             {.i = -1 } },                       // Move windows to different monitors
 	{ MODKEY|ShiftMask,             XK_period,                  tagmon,             {.i = +1 } },                       // Move windows to different monitors
-        { MODKEY,                       XK_minus,                   setgaps,            {.i = -5 } },                       // Set Gaps --
-        { MODKEY,                       XK_equal,                   setgaps,            {.i = +5 } },                       // Set Gaps ++
-        { MODKEY|ShiftMask,             XK_minus,                   setgaps,            {.i = GAP_RESET } },                // Reset Gaps
-        { MODKEY|ShiftMask,             XK_equal,                   setgaps,            {.i = GAP_TOGGLE } },               // Toggle Gaps
-//	{ MODKEY|ShiftMask,		XK_KP_Add,                  changeopacity,      {.f = +0.1}},                       // Change Opacity ++
-//	{ MODKEY|ShiftMask,		XK_KP_Subtract,             changeopacity,      {.f = -0.1}},                       // Change Opacity --
+    { MODKEY,                       XK_minus,                   setgaps,            {.i = -5 } },                       // Set Gaps --
+    { MODKEY,                       XK_equal,                   setgaps,            {.i = +5 } },                       // Set Gaps ++
+    { MODKEY|ShiftMask,             XK_minus,                   setgaps,            {.i = GAP_RESET } },                // Reset Gaps
+    { MODKEY|ShiftMask,             XK_equal,                   setgaps,            {.i = GAP_TOGGLE } },               // Toggle Gaps
 	TAGKEYS(                        XK_1,                                           0)
 	TAGKEYS(                        XK_2,                                           1)
 	TAGKEYS(                        XK_3,                                           2)
@@ -208,9 +207,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                           6)
 	TAGKEYS(                        XK_8,                                           7)
 	TAGKEYS(                        XK_9,                                           8)
-        { MODKEY,                       XK_0,                       spawn,              {0} },                              // Restart DWM Magically
-        { MODKEY|ShiftMask,             XK_r,                       self_restart,       {0} },                              // Restart DWM Magically
+    { MODKEY,                       XK_0,                       spawn,              SHCMD("prompt \"Do you want to shutdown?\" \"shutdown -h now\"") },                              // Poweroff System
+    { MODKEY|ShiftMask,             XK_r,                       self_restart,       {0} },                              // Restart DWM Magically
 	{ MODKEY|ShiftMask,             XK_c,                       quit,               {0} },                              // Kill DWM and logout
+	//Macro Keypad Bindings
+    { 0,                            XF86XK_Launch5,           		spawn,              SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
+    { 0,                            XF86XK_Launch6,           		spawn,              SHCMD("st") },
+    { 0,                            XF86XK_Launch7,           		spawn,              SHCMD("discord") },
+    { 0,                            XF86XK_Launch8,           		spawn,              SHCMD("skippy-xd") },
 };
 
 /* button definitions */
@@ -220,9 +224,9 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-        { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
-        { ClkStatusText,        0,              Button2,        spawn,          {.v = sttermcmd } },
-        { ClkStatusText,        0,              Button3,        spawn,          {.v = gnometermcmd } },
+    { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
+    { ClkStatusText,        0,              Button2,        spawn,          {.v = sttermcmd } },
+    { ClkStatusText,        0,              Button3,        spawn,          {.v = gnometermcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
