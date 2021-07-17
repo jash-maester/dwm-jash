@@ -211,10 +211,10 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_r,                       self_restart,       {0} },                              // Restart DWM Magically
 	{ MODKEY|ShiftMask,             XK_c,                       quit,               {0} },                              // Kill DWM and logout
 	//Macro Keypad Bindings
-    { 0,                            XF86XK_Launch5,           		spawn,              SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
-    { 0,                            XF86XK_Launch6,           		spawn,              SHCMD("st") },
-    { 0,                            XF86XK_Launch7,           		spawn,              SHCMD("discord") },
-    { 0,                            XF86XK_Launch8,           		spawn,              SHCMD("skippy-xd") },
+    { 0,                            XF86XK_Launch5,           		spawn,          SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
+    { 0,                            XF86XK_Launch6,           		spawn,          SHCMD("st") },
+    { 0,                            XF86XK_Launch7,           		spawn,          SHCMD("discord") },
+    { 0,                            XF86XK_Launch8,           		spawn,          SHCMD("skippy-xd") },
 };
 
 /* button definitions */
