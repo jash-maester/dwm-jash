@@ -145,6 +145,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
+	{ MODKEY,                       XK_e,                       spawn,              SHCMD("~/.local/bin/dmenu/emoji_insert") },  // Spawn Emoji Menu
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
     { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
     { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
