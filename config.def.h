@@ -145,6 +145,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
+	{ MODKEY,                       XK_e,                       spawn,              SHCMD("~/.local/bin/dmenu/emoji_insert") },  // Spawn Emoji Menu
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
     { MODKEY|ControlMask,           XK_m,                       spawn,              SHCMD("pavucontrol") },
     { 0,                            XF86XK_Calculator,          spawn,              SHCMD("gnome-calculator") },
@@ -172,7 +173,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,                       focusstack,         {.i = -1 } },                       // Change focus to windows in the current stack
 	{ MODKEY,                       XK_h,                       setmfact,           {.f = -0.05} },                     // Change the horizontal ratio of tiled windows
 	{ MODKEY,                       XK_l,                       setmfact,           {.f = +0.05} },                     // Change the horizontal ratio of tiled windows
-	{ MODKEY,                       XK_o,                       setmfact,           {.f = 0} },                         // Resets the horizontal ratio of tiled windows
 	{ MODKEY,                       XK_i,                       incnmaster,         {.i = +1 } },                       // Re-arrange Tiled windows in the stack
 	{ MODKEY,                       XK_u,                       incnmaster,         {.i = -1 } },                       // Re-arrange Tiled windows in the stack
     { MODKEY|ShiftMask,             XK_h,                       setcfact,           {.f = +0.25} },                     // Change the vertical ratio of tiled windows
@@ -188,8 +188,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,                   togglefloating,     {0} },                              // Toggle Floating Window
     { MODKEY|ShiftMask,             XK_f,                       togglefullscr,      {0} },                              // Toggle Fullscreen
     { MODKEY|ShiftMask,             XK_space,                   togglealwaysontop,  {0} },                              // Toggle Always on-top floating
-//	{ MODKEY,                       XK_0,                       view,               {.ui = ~0 } },
-//	{ MODKEY|ShiftMask,             XK_0,                       tag,                {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,                   focusmon,           {.i = -1 } },                       // Focus change monitors
 	{ MODKEY,                       XK_period,                  focusmon,           {.i = +1 } },                       // Focus change monitors
 	{ MODKEY|ShiftMask,             XK_comma,                   tagmon,             {.i = -1 } },                       // Move windows to different monitors
@@ -221,12 +219,19 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,              Button1,        setlayout,      {.v = &layouts[0]} },   // Switch to Tile (Default) Layout
+	{ ClkLtSymbol,          0,              Button2,        cyclelayout,    {.i = +1} }, 			// Cycle Between Available Layouts
+	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, 	// Switch to Monocle Layout
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button4,        spawn,          SHCMD("light -A 5") }, // Increase Brightness By Scrolling UP
+	{ ClkWinTitle,          0,              Button5,        spawn,          SHCMD("light -U 5") }, // Decrease Brightness By Scrolling Down
     { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
-    { ClkStatusText,        0,              Button2,        spawn,          {.v = sttermcmd } },
-    { ClkStatusText,        0,              Button3,        spawn,          {.v = gnometermcmd } },
+    { ClkStatusText,        0,              Button2,        spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
+    { ClkStatusText,        MODKEY,         Button2,        spawn,          SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
+    { ClkStatusText,        0,              Button3,        spawn,          {.v = sttermcmd } },
+    { ClkStatusText,        MODKEY,         Button3,        spawn,          {.v = gnometermcmd } },
+    { ClkStatusText,        0,              Button4,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
+    { ClkStatusText,        0,              Button5,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
