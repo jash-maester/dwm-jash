@@ -1,7 +1,7 @@
 # This one is for my Ubuntu (21.04) System
 
 ## dwm - dynamic window manager
-============================
+------------
 dwm is an extremely fast, small, and dynamic window manager for X.
 
 ## Requirements
