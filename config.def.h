@@ -223,8 +223,8 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button2,        cyclelayout,    {.i = +1} }, 			// Cycle Between Available Layouts
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, 	// Switch to Monocle Layout
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkWinTitle,          0,              Button4,        focusstack,     {.i = -1 } },
-	{ ClkWinTitle,          0,              Button5,        focusstack,     {.i = +1 } },
+	{ ClkWinTitle,          0,              Button4,        spawn,          SHCMD("light -A 5") }, // Increase Brightness By Scrolling UP
+	{ ClkWinTitle,          0,              Button5,        spawn,          SHCMD("light -U 5") }, // Decrease Brightness By Scrolling Down
     { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
     { ClkStatusText,        0,              Button2,        spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
     { ClkStatusText,        MODKEY,         Button2,        spawn,          SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
