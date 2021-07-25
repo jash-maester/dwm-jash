@@ -62,22 +62,6 @@ static const char *const autostart[] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-/*
-static const Rule rules[] = {*/
-	/* class            instance      title       tags mask     isfloating   opacity      monitor */
-/*	{ "Gimp",           NULL,         NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",        "Navigator",  NULL,       0,            0,           1.0,             -1 },
-	{ "firefox",        "Devtools",   NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",        "Places",     "Library",  0,            1,           1.0,             -1 },
-	{ "firefox",        "Toolkit",     "Picture-in-Picture",  0,            1,           1.0,             -1 },
-	{ "firefox",        "Firefox",     "Quit and close tabs?",  0,            1,           1.0,             -1 },
-	{ "Gnome-terminal", NULL,         NULL,       0,            0,           defaultopacity,  -1 },
-	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           defaultopacity,  -1 },
-        { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           defaultopacity,  -1 },
-        { "mpv",            NULL,         NULL,       0,            1,           defaultopacity,  -1 },
-    { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           defaultopacity,  -1 },
-};
-*/
 static const Rule rules[] = {
 	/* class            instance      title       tags mask     isfloating   monitor */
 	{ "Gimp",           NULL,         NULL,       0,            1,           -1 },
