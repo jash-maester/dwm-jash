@@ -210,6 +210,7 @@ static Button buttons[] = {
 	{ ClkWinTitle,          0,              Button4,        spawn,          SHCMD("light -A 5") }, // Increase Brightness By Scrolling UP
 	{ ClkWinTitle,          0,              Button5,        spawn,          SHCMD("light -U 5") }, // Decrease Brightness By Scrolling Down
     { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
+    { ClkStatusText,        MODKEY,         Button1,        spawn,          {.v = "gsimplecal" } },
     { ClkStatusText,        0,              Button2,        spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
     { ClkStatusText,        MODKEY,         Button2,        spawn,          SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
     { ClkStatusText,        0,              Button3,        spawn,          {.v = sttermcmd } },
