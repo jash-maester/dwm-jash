@@ -56,6 +56,7 @@ static const char *const autostart[] = {
     "discord", NULL,
     "/usr/bin/kdeconnect-indicator", NULL,
     "xbanish", NULL,
+    "sh", "-c", "xset r rate 210 40", NULL,
 	NULL /* terminate */
 };
 
@@ -207,6 +208,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button2,        cyclelayout,    {.i = +1} }, 			// Cycle Between Available Layouts
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, 	// Switch to Monocle Layout
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button3,        spawn,          SHCMD("skippy-xd") },  // Launch Skippy-xd
 	{ ClkWinTitle,          0,              Button4,        spawn,          SHCMD("light -A 5") }, // Increase Brightness By Scrolling UP
 	{ ClkWinTitle,          0,              Button5,        spawn,          SHCMD("light -U 5") }, // Decrease Brightness By Scrolling Down
     { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
