@@ -56,28 +56,13 @@ static const char *const autostart[] = {
     "discord", NULL,
     "/usr/bin/kdeconnect-indicator", NULL,
     "xbanish", NULL,
+    "sh", "-c", "xset r rate 210 40", NULL,
 	NULL /* terminate */
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-/*
-static const Rule rules[] = {*/
-	/* class            instance      title       tags mask     isfloating   opacity      monitor */
-/*	{ "Gimp",           NULL,         NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",        "Navigator",  NULL,       0,            0,           1.0,             -1 },
-	{ "firefox",        "Devtools",   NULL,       0,            1,           1.0,             -1 },
-	{ "firefox",        "Places",     "Library",  0,            1,           1.0,             -1 },
-	{ "firefox",        "Toolkit",     "Picture-in-Picture",  0,            1,           1.0,             -1 },
-	{ "firefox",        "Firefox",     "Quit and close tabs?",  0,            1,           1.0,             -1 },
-	{ "Gnome-terminal", NULL,         NULL,       0,            0,           defaultopacity,  -1 },
-	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           defaultopacity,  -1 },
-        { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           defaultopacity,  -1 },
-        { "mpv",            NULL,         NULL,       0,            1,           defaultopacity,  -1 },
-    { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           defaultopacity,  -1 },
-};
-*/
 static const Rule rules[] = {
 	/* class            instance      title       tags mask     isfloating   monitor */
 	{ "Gimp",           NULL,         NULL,       0,            1,           -1 },
@@ -144,6 +129,7 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },             // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
+	{ MODKEY,                       XK_F2,                      spawn,              SHCMD("microsoft-edge-dev") },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
 	{ MODKEY,                       XK_e,                       spawn,              SHCMD("~/.local/bin/dmenu/emoji_insert") },  // Spawn Emoji Menu
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
@@ -223,9 +209,11 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button2,        cyclelayout,    {.i = +1} }, 			// Cycle Between Available Layouts
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, 	// Switch to Monocle Layout
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button3,        spawn,          SHCMD("skippy-xd") },  // Launch Skippy-xd
 	{ ClkWinTitle,          0,              Button4,        spawn,          SHCMD("light -A 5") }, // Increase Brightness By Scrolling UP
 	{ ClkWinTitle,          0,              Button5,        spawn,          SHCMD("light -U 5") }, // Decrease Brightness By Scrolling Down
     { ClkStatusText,        0,              Button1,        spawn,          {.v = updateBlockscmd } },
+    { ClkStatusText,        MODKEY,         Button1,        spawn,          SHCMD("gsimplecal") },
     { ClkStatusText,        0,              Button2,        spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
     { ClkStatusText,        MODKEY,         Button2,        spawn,          SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle; pkill -RTMIN+10 dwmblocks") },
     { ClkStatusText,        0,              Button3,        spawn,          {.v = sttermcmd } },
