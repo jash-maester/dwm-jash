@@ -129,6 +129,7 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },             // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
+	{ MODKEY,                       XK_F2,                      spawn,              SHCMD("microsoft-edge-dev") },               // Spawn Browser ( Default Firefox)
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
 	{ MODKEY,                       XK_e,                       spawn,              SHCMD("~/.local/bin/dmenu/emoji_insert") },  // Spawn Emoji Menu
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
