@@ -20,21 +20,10 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
-static const char* const nord[]     = { "#2e3440", "#3b4252", "#434c5e", "#4c566a",
-                                        "#d8dee9", "#e5e9f0", "#eceff4",
-                                        "#8fbcbb", "#88c0d0", "#81a1c1", "#5e81ac",
-                                        "#bf616a", "#d08770", "#ebcb8b", "#a3be8c", "#b48ead" };
-static const char *colors[][3]      = {
-	/*                  fg         bg         border   */
-	[SchemeNorm]    = { nord[4], nord[0], nord[0] },
-	[SchemeSel]     = { nord[0], nord[9],  nord[9]  },
-    [SchemeUrg]     = { nord[0], nord[11],  nord[11]  },
-	[SchemeStatus]  = { nord[4], nord[0],  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel] = { nord[0], nord[9],  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]= { nord[4], nord[0],  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel] = { nord[0], nord[9],  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]= { nord[4], nord[0],  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-};
+
+// ColorSchemes
+//#include "nord.h"
+#include "tokyonight.h"
 
 static const char *const autostart[] = {
     //"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
@@ -57,6 +46,7 @@ static const char *const autostart[] = {
     "/usr/bin/kdeconnect-indicator", NULL,
     "xbanish", NULL,
     "sh", "-c", "xset r rate 210 40", NULL,
+    "/usr/libexec/deja-dup/deja-dup-monitor", NULL, // Deja-Dup Backup Daemon
 	NULL /* terminate */
 };
 
@@ -70,12 +60,13 @@ static const Rule rules[] = {
 	{ "firefox",        "Devtools",   NULL,       0,            1,           -1 },
 	{ "firefox",        "Places",     "Library",  0,            1,           -1 },
 	{ "firefox",        "Firefox",    "Quit and close tabs?",   0, 1,        -1 },
+	{ "Firefox",        "Toolkit",    "Picture-in-Picture",     0, 1,        -1 },
 	{ "jetbrains-toolbox",  NULL,     NULL,       0,            1,           -1 },
 	{ "Gnome-terminal", NULL,         NULL,       0,            0,           -1 },
 	{ "Gnome-terminal", NULL,         "cmus v2.9.1", 1 << 8,    1,           -1 },
     { "Pavucontrol",    "pavucontrol",NULL,       0,            1,           -1 },
     { "mpv",            NULL,         NULL,       0,            1,           -1 },
-    { "Gnome-calculator", "gnome-calculator", "Calculator",   0,    1,           -1 },
+    { "Gnome-calculator", "gnome-calculator", "Calculator", 0,  1,           -1 },
 };
 
 /* layout(s) */
@@ -116,6 +107,7 @@ static const char *stmusiccmd[]  = { "st", "-e", "cmus", NULL };
 static const char *updateBlockscmd[] = {"pkill", "-RTMIN+10", "dwmblocks", NULL};
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *gnometermcmd[]  = { "gnome-terminal", NULL };
+static const char *keym[]  = { "keym", NULL };
 
 //static const char *gnomemusiccmd[]  = { "gnome-terminal", "-e", "cmus", NULL };
 
@@ -129,7 +121,9 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_t,                       spawn,              {.v = gnometermcmd } },             // Spawn Terminal
 	{ MODKEY,                       XK_F3,                      spawn,              {.v = stmusiccmd } },               // Spawn Cmus
 	{ MODKEY,                       XK_F1,                      spawn,              {.v = browsercmd } },               // Spawn Browser ( Default Firefox)
-	{ MODKEY,                       XK_F2,                      spawn,              SHCMD("microsoft-edge-dev") },               // Spawn Browser ( Default Firefox)
+	{ MODKEY,                       XK_F4,                      spawn,              {.v = keym } },               // Spawn Browser ( Default Firefox)
+	//{ MODKEY,                       XK_F2,                      spawn,              SHCMD("flatpak run com.github.Eloston.UngoogledChromium") },               // Spawn Browser
+	{ MODKEY,                       XK_F2,                      spawn,              SHCMD("microsoft-edge") },               // Spawn Browser
 	{ MODKEY,                       XK_a,                       spawn,              SHCMD("skippy-xd") },               // Spawn Skippy-xd (Overview)
 	{ MODKEY,                       XK_e,                       spawn,              SHCMD("~/.local/bin/dmenu/emoji_insert") },  // Spawn Emoji Menu
 	{ MODKEY,                       XK_c,                       spawn,              SHCMD("clipmenu") },                // Spawn Clipmenu (dmenu)
@@ -140,8 +134,8 @@ static Key keys[] = {
     { 0,                            XF86XK_MonBrightnessDown,   spawn,              SHCMD("light -U 5") },
     { 0,                            XF86XK_KbdBrightnessUp,     spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh increase") },
     { 0,                            XF86XK_KbdBrightnessDown,   spawn,              SHCMD("bash ~/.config/i3/scripts/keyboard_light.sh decrease") },
-    { 0,                            XK_Print,                   spawn,              SHCMD("flameshot screen -p ~/Pictures/screenshots") },
-    { ShiftMask,                    XK_Print,                   spawn,              SHCMD("flameshot gui -p ~/Pictures/screenshots") },
+    { 0,                            XK_Print,                   spawn,              SHCMD("maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H-%M).png") },
+    { ShiftMask,                    XK_Print,                   spawn,              SHCMD("maim -s ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H-%M).png") },
     { 0,                            XF86XK_AudioRaiseVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+10 dwmblocks") },
     { 0,                            XF86XK_AudioLowerVolume,    spawn,              SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+10 dwmblocks") },
     { 0,                            XF86XK_AudioMute,           spawn,              SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+10 dwmblocks") },
