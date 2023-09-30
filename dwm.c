@@ -206,7 +206,7 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
-static void enternotify(XEvent *e);
+// static void enternotify(XEvent *e);
 static void enqueue(Client *c);
 static void enqueuestack(Client *c);
 static void expose(XEvent *e);
